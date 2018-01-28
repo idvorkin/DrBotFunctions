@@ -53,15 +53,10 @@ public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
                     if (update.MembersAdded.Any())
                     {
                         var reply = activity.CreateReply();
-                        var newMembers = update.MembersAdded?.Where(t => t.Id != activity.Recipient.Id);
+                        var newMembers = update.MembersAdded.Where(t => t.Id != activity.Recipient.Id);
                         foreach (var newMember in newMembers)
                         {
-                            reply.Text = "Welcome";
-                            if (!string.IsNullOrEmpty(newMember.Name))
-                            {
-                                reply.Text += $" {newMember.Name}";
-                            }
-                            reply.Text += "!";
+                            reply.Text = $"Welcome${ newMember?.Name}, I'm Dr Bot!";
                             await client.Conversations.ReplyToActivityAsync(reply);
                         }
                     }

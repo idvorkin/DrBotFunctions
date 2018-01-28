@@ -30,13 +30,13 @@ public class EchoDialog : IDialog<object>
     public virtual async Task MessageReceivedAsync(IDialogContext context, IAwaitable<IMessageActivity> argument)
     {
         var message = await argument;
-        if (message.Text == "reset")
+        if (message.Text.ToLower() == "reset")
         {
             PromptDialog.Confirm(
                 context,
                 AfterResetAsync,
-                "Are you sure you want to reset the count?",
-                "Didn't get that!",
+                "Are you sure you want start over?",
+                "Oops - I don't understand!",
                 promptStyle: PromptStyle.Auto);
         }
         else
