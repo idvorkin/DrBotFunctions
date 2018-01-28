@@ -26,20 +26,9 @@ public class EchoDialog : IDialog<object>
 
         return Task.CompletedTask;
     }
-    private async Task InitializeDialogAsync(IDialogContext context)
-    {
-            this.count=1;
-            return context.PostAsync("Hello Friend, I'm the Dr. Penny for your thoughts? \n So far, I know the words: reset");
-    }
 
     public virtual async Task MessageReceivedAsync(IDialogContext context, IAwaitable<IMessageActivity> argument)
     {
-        if (this.count == 0)
-        {
-            await InitializeDialogAsync(context);
-            return;
-        }
-
         var message = await argument;
         if (message.Text.ToLower() == "reset")
         {
@@ -62,7 +51,8 @@ public class EchoDialog : IDialog<object>
         var confirm = await argument;
         if (confirm)
         {
-            await InitializeDialogAsync(context);
+            this.count = 1;
+            await context.PostAsync("Reset count.");
         }
         else
         {

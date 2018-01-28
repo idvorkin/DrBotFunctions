@@ -47,9 +47,7 @@ public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
                 case ActivityTypes.Message:
                     await Conversation.SendAsync(activity, () => new EchoDialog());
                     break;
-
                 case ActivityTypes.ConversationUpdate:
-                /*  Don't do anything for conversation updates since handling in the Dialog
                     var client = new ConnectorClient(new Uri(activity.ServiceUrl));
                     IConversationUpdateActivity update = activity;
                     if (update.MembersAdded.Any())
@@ -58,11 +56,10 @@ public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
                         var newMembers = update.MembersAdded.Where(t => t.Id != activity.Recipient.Id);
                         foreach (var newMember in newMembers)
                         {
-                            reply.Text = $"Hi I'm Dr Bot, pull up a chair and take a deep breath\n(I know the words: reset)";
+                            reply.Text = $"Welcome${ newMember?.Name}, I'm Dr Bot!";
                             await client.Conversations.ReplyToActivityAsync(reply);
                         }
                     }
-                    */
                     break;
                 case ActivityTypes.ContactRelationUpdate:
                 case ActivityTypes.Typing:
